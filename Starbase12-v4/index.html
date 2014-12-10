@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>Starbase12_v4</title>
+    <!-- CSS Section -->
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+</head>
+<body onload="preload()">
+    <canvas id="arcade" width="800" height="600"></canvas>
+
+    <!-- JavaScript Libraries -->
+    <script src="Scripts/libs/easeljs-0.7.1.min.js"></script>
+    <script src="Scripts/libs/tweenjs-0.5.1.min.js"></script>
+    <script src="Scripts/libs/soundjs-0.5.2.min.js"></script>
+    <script src="Scripts/libs/preloadjs-0.4.1.min.js"></script>
+    <script src="Scripts/filters/Filter.js"></script>
+    <script src="Scripts/filters/ColorFilter.js"></script>
+    <script src="Scripts/libs/particleEmitterJs-0.5.0.js"></script>
+    <script src="Scripts/libs/Stats.js"></script>
+
+    <!-- Game Scripts -->
+    <script src="Scripts/config/config.js"></script>
+    <script src="Scripts/config/keys.js"></script>
+    <script src="Scripts/config/controls.js"></script>
+    <script src="Scripts/config/layer.js"></script>
+    <script src="Scripts/managers/asset.js"></script>
+    <script src="Scripts/objects/loaderbar.js"></script>
+    <script src="Scripts/managers/gametile.js"></script>
+    <script src="Scripts/utility/showLocation.js"></script>
+    <script src="Scripts/utility/drawdebugrect.js"></script>
+    <script src="Scripts/utility/distance.js"></script>
+    <script src="Scripts/utility/getarcstring.js"></script>
+    <script src="Scripts/utility/textcolour.js"></script>
+    <script src="Scripts/utility/quadrant.js"></script>
+    <script src="Scripts/utility/oppositeangle.js"></script>
+    <script src="Scripts/utility/speech.js"></script>
+    <script src="Scripts/interfaces/iobject.js"></script>
+    <script src="Scripts/objects/gameobject.js"></script>
+    <script src="Scripts/objects/button.js"></script>
+    <script src="Scripts/objects/crosshair.js"></script>
+    <script src="Scripts/objects/hud.js"></script>
+    <script src="Scripts/objects/label.js"></script>
+    <script src="Scripts/objects/explosion.js"></script>
+    <script src="Scripts/objects/flame.js"></script>
+    <script src="Scripts/objects/shield.js"></script>
+    <script src="Scripts/objects/player.js"></script>
+    <script src="Scripts/objects/phasertracer.js"></script>
+    <script src="Scripts/objects/phaser.js"></script>
+    <script src="Scripts/objects/disruptor.js"></script>
+    <script src="Scripts/objects/photon.js"></script>
+    <script src="Scripts/objects/enemy.js"></script>
+    <script src="Scripts/objects/starbase.js"></script>
+    <script src="Scripts/managers/klingon.js"></script>
+    <script src="Scripts/managers/particleexplosion.js"></script>
+    <script src="Scripts/managers/particleflame.js"></script>
+    <script src="Scripts/managers/beamweapon.js"></script>
+    <script src="Scripts/managers/collision.js"></script>
+    <script src="Scripts/states/gameover.js"></script>
+    <script src="Scripts/states/play.js"></script>
+    <script src="Scripts/states/mission.js"></script>
+    <script src="Scripts/states/movement.js"></script>
+    <script src="Scripts/states/defenses.js"></script>
+    <script src="Scripts/states/weapons.js"></script>
+    <script src="Scripts/states/instructions.js"></script>
+    <script src="Scripts/states/menu.js"></script>
+    <script src="Scripts/game.js"></script>
+</body>
+</html>
