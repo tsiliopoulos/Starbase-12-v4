@@ -92,6 +92,7 @@ var starbaseAlive: boolean = true;
 var klingonsAlive: boolean = true;
 var playerAlive: boolean = true;
 var gameControls: boolean = false;
+var lastDocked: number = 0;
 
 // Game Music Variables
 var battleSound: createjs.SoundInstance;

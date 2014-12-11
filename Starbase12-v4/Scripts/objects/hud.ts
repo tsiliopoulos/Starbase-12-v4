@@ -5,7 +5,9 @@ module objects {
         public phaserEnergy: number;
         public hullIntegrity: number;
         public photonNumber: number;
+        public starbasePercent: number;
         public score: number;
+        public starbaseDeadScore: number;
 
         // PRIVATE PROPERTIES ++++++++++++++++++++++++++++++++++++++++++++++
         private _leftBorder: createjs.Bitmap;
@@ -16,6 +18,9 @@ module objects {
         private _photonValue: createjs.Text;
         private _scoreLabel: createjs.Text;
         private _scoreValue: createjs.Text;
+        private _starbaseBuildLabel: createjs.Text;
+        private _starbaseBuildValue: createjs.Text;
+
 
         // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++
         constructor() {
@@ -37,6 +42,27 @@ module objects {
             else {
                 this._photonValue.color = config.GREEN;
             }
+
+            if (!starbaseAlive) {
+                // Display construction labels
+                this._starbaseBuildLabel.alpha = 1;
+                this._starbaseBuildValue.alpha = 1;
+
+                this.starbasePercent = Math.floor(((this.score - this.starbaseDeadScore) / 5000) * 100);
+                
+                // Don't let the percent complete climb beyond 100%
+                if (this.starbasePercent >= 100) {
+                    this.starbasePercent = 100;
+                }
+
+                this._starbaseBuildValue.text = this.starbasePercent.toString() + "%";
+            }
+            else {
+                // Hide construction labels and reset
+                this._starbaseBuildLabel.alpha = 0;
+                this._starbaseBuildValue.alpha = 0;
+                this.starbaseDeadScore = 0;
+            }
             this._scoreValue.text = Math.floor(this.score).toString();
         }
 
@@ -47,6 +73,8 @@ module objects {
             this.phaserEnergy = config.PHASER_LEVEL;
             this.photonNumber = config.PHOTON_NUM;
             this.score = 0;
+            this.starbasePercent = 100;
+            this.starbaseDeadScore = 0;
         }
 
 
@@ -75,6 +103,16 @@ module objects {
             this._scoreValue = new createjs.Text(this.score.toString(), config.FONT_SIZE + " " + config.FONT, config.GREEN);
             this._scoreValue.x = 660;
             this.addChild(this._scoreValue);
+
+            this._starbaseBuildLabel = new createjs.Text("STARBASE CONSTRUCTION", config.FONT_SIZE + " " + config.FONT, config.RED);
+            this._starbaseBuildLabel.x = 300;
+            this.addChild(this._starbaseBuildLabel);
+            this._starbaseBuildLabel.alpha = 0;
+
+            this._starbaseBuildValue = new createjs.Text(this.starbasePercent.toString() + "%", config.FONT_SIZE + " " + config.FONT, config.RED);
+            this._starbaseBuildValue.x = 530;
+            this.addChild(this._starbaseBuildValue);
+            this._starbaseBuildValue.alpha = 0;
         }
 
         // Draw HUD Borders (Yellow)

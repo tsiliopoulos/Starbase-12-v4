@@ -1,6 +1,9 @@
 ﻿// Starbase Class
 module objects {
     export class Starbase extends objects.GameObject implements interfaces.IObject {
+        // PUBLIC PROPERTIES
+        public hasDocked: boolean;
+        
         // PRIVATE PROPERTIES ++++++++++++++++++++++++++++++++++++++++++++++
         private _turnDirection: number;
 
@@ -55,6 +58,7 @@ module objects {
             this.dx = 0;
             this.dy = 0;
             this.damage = config.STARBASE_DAMAGE;
+            this.hasDocked = true;
         }
 
         // Rotate the Starbase in a random direction

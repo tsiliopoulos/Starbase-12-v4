@@ -77,7 +77,7 @@ module managers {
 
         // Set phaser state to Strafing
         private _phaserStrafing() {
-            if (gameControls) {
+            if ((gameControls) && (this.phaserSound)) {
                 // check to see if phaser sound is still playing
                 if ((playerAlive) && (hud.phaserEnergy > 0) && (this.phaserSound.playState != createjs.Sound.PLAY_FINISHED)) {
                     this._strafe = true;

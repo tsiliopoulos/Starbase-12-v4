@@ -30,6 +30,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -118,6 +120,7 @@
     <Content Include="assets\images\atlas.json" />
     <Content Include="assets\images\klingonShields.ai" />
     <Content Include="assets\images\ShipShields.ai" />
+    <Content Include="assets\images\startbaseDocked.png" />
     <Content Include="assets\images\startbaseShields.ai" />
     <Content Include="assets\fonts\fontAtlas.json" />
     <Content Include="assets\fonts\startrek.eot" />
@@ -153,6 +156,7 @@
     <Content Include="assets\images\startbaseYellow.png" />
     <Content Include="assets\images\startButton.png" />
     <Content Include="assets\images\weaponsScreen.jpg" />
+    <Content Include="assets\sounds\powerup.mp3" />
     <Content Include="assets\sounds\zero.mp3" />
     <Content Include="assets\sounds\1.mp3" />
     <Content Include="assets\sounds\2.mp3" />
@@ -278,7 +282,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>32274</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:32274/</IISUrl>
+          <IISUrl>http://localhost:32274/starbase12</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

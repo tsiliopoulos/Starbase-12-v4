@@ -18,7 +18,6 @@
             this.spawn();
             this._init();
             this._selectTarget();
-
         }
 
         // PUBLIC METHODS ++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -36,13 +35,13 @@
         // Update Method
         public update() {
             if (gameControls) {
+                this._acquireTarget();
                 this._turnToFaceTarget();
                 this._fireDisruptor();
             }
             //this.calcHitArea(); // debug hit area
             this.healthUpdate();
-            this.shield.update();
-            this._checkTargetAlive();
+            this.shield.update(); 
         }
 
         // Destroy Enemy
@@ -77,10 +76,10 @@
             this.targetAngle += 180;
         }
 
-        // Select a Random Target
+        // Select an initial Target - pick starbase 70% of the time
         private _selectTarget() {
             var targetProbability = Math.floor(Math.random() * 100 + 1);
-            if (targetProbability > 66) {
+            if (targetProbability > 70) {
                 this.target = player;
             }
             else {
@@ -88,13 +87,27 @@
             }
         }
 
-        // Check to see if target is still alive
-        private _checkTargetAlive() {
-            if (!starbaseAlive) {
+        // Check which target is closest
+        private _checkClosestTarget(): objects.GameObject {
+            var closestTarget: objects.GameObject;
+            // Switch targets depending on which is closest
+            if (utility.distance(this.location, player.location) < utility.distance(this.location, starbase.location)) {
+                closestTarget = player;
+            }
+            if (utility.distance(this.location, starbase.location) <= utility.distance(this.location, player.location)) {
+                closestTarget = starbase;
+            }
+            return closestTarget;
+        }
+
+        
+        private _acquireTarget() {
+            // Acquire a new target if starbase is destroyed or player has hit hull
+            if ((!starbaseAlive) || (this.integrity < 60)) {
                 this.target = player;
             }
-            if (!playerAlive) {
-                this.target = starbase;
+            else {
+                this.target = this._checkClosestTarget();
             }
 
         }

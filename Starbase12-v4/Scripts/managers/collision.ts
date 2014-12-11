@@ -119,10 +119,10 @@ module managers {
                             klingonsAlive = false;
 
                             // pause before changing levels
-                            setTimeout(function (e) { 
-                                levelUp = true; 
+                            setTimeout(function (e) {
+                                levelUp = true;
                             }, 1000);
-                            
+
                         }
                     }
                     game.removeChild(defendObject.integrityLabel);
@@ -131,9 +131,22 @@ module managers {
                     switch (defendObject.name) {
                         case "starbase":
                             starbaseAlive = false;
+                            hud.starbaseDeadScore = hud.score;
+                            hud.starbasePercent = 0;
                             break;
                         case "ship":
                             playerAlive = false;
+                            starbaseAlive = false;
+                            klingonsAlive = false;
+                            gameLevel = 1;
+                            enemyLevel = 0;
+                            lastDocked = 0;
+
+                            // ensure to remove all enemies from the array
+                            for (var enemyNum = 0; enemyNum < enemies.length; enemyNum++) {
+                                enemies.splice(enemyNum, 1);
+                            }
+
                             battleSound.stop();
                             stage.removeChild(game);
                             game.removeAllChildren();
@@ -227,6 +240,57 @@ module managers {
             this._hullCollider(this._currentDisruptor, player, 0);
         }
 
+        // Check if player has docked with starbase
+        private _checkPlayerAndStarbase() {
+            if (utility.distance(starbase.location, player.location) < ((starbase.radius * 0.6) + player.radius)) {
+                player.speed = 0;
+                if (!starbase.hasDocked) {
+                    createjs.Sound.play("powerup");
+                    starbase.hasDocked = true;
+                    starbase.gotoAndPlay("starbaseDocked");
+                    lastDocked = gameLevel;
+
+                    // Display "Starship Docked"
+                    var dockedLabel = new objects.Label(config.MIDDLE_X, config.MIDDLE_Y, "Starship Docked");
+                    dockedLabel.fontSize(50);
+                    game.addChild(dockedLabel);
+                    setTimeout(function (e) {
+                        game.removeChild(dockedLabel);
+                    }, 2000);
+
+                    // check hull integrity and perform repairs
+                    if ((player.integrity > 50) && (player.integrity < 100)) {
+                        player.integrity = 100;
+                        player.gotoAndPlay("ship");
+                    }
+                    else if (player.integrity < 51) {
+                        player.integrity = 60;
+                        player.gotoAndPlay("shipY");
+                    }
+
+                    // only fix shields if hull is intact
+                    // check shield arcs
+                    for (var arcNum = 0; arcNum < config.ARC_COUNT; arcNum++) {
+                        var shieldArc = player.shield.arcs[arcNum];
+                        var arcString: string = utility.getArcString("ship", arcNum);
+                        if (shieldArc.integrity < 100) {
+                            shieldArc.integrity = 100;
+                            shieldArc.alpha = 1;
+                            shieldArc.gotoAndPlay(arcString);
+                        }
+                    }
+
+                    // replace photons
+                    if (hud.photonNumber < 8) {
+                        hud.photonNumber += 4;
+                        if (hud.photonNumber > 8) {
+                            hud.photonNumber = 8;
+                        }
+                    }
+                }
+            }
+        }
+
         // PUBLIC METHODS ++++++++++++++++++++++++++++++++++++++++++++++++
 
         // Update Method
@@ -268,6 +332,13 @@ module managers {
                 if (playerAlive) {
                     this._checkDisruptorAndPlayerShields();
                     this._checkDisruptorAndPlayer();
+                }
+            }
+
+            // Check if Player docks with Starbase
+            if (!starbase.hasDocked) {
+                if ((starbaseAlive) && (starbase.integrity > 60)) {
+                    this._checkPlayerAndStarbase();
                 }
             }
 

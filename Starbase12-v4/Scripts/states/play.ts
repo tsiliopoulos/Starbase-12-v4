@@ -3,27 +3,27 @@ module states {
     // Main Game Loop
     export function PlayState(event) {
         // Update Starbase
-            starbase.update();
-            starbase.integrityLabel.updateCache();
-            starbase.updateCache();
+        starbase.update();
+        starbase.integrityLabel.updateCache();
+        starbase.updateCache();
 
-            // Update Player
-            player.update();
-            player.integrityLabel.updateCache();
-            player.updateCache();
+        // Update Player
+        player.update();
+        player.integrityLabel.updateCache();
+        player.updateCache();
 
-            // Update Managers
-            klingon.update();
-            beamWeapon.update();
-            particleExplosion.update();
-            collision.update();
+        // Update Managers
+        klingon.update();
+        beamWeapon.update();
+        particleExplosion.update();
+        collision.update();
 
-            // Update Crosshair
-            crosshair.update();
-            //crosshair.updateCache();
+        // Update Crosshair
+        crosshair.update();
+        //crosshair.updateCache();
 
-            // Update HUD
-            hud.update();
+        // Update HUD
+        hud.update();
 
         if (levelUp) {
             // Say and show level
@@ -33,11 +33,11 @@ module states {
             showLevelLabel();
         }
     }
-    
+
     // generate a new starbase
     function createStarbase() {
-        // if starbase hasn't been created...
-        if ((!starbase) || (starbaseAlive == false)){
+        // if starbase hasn't been created and starbase is fully constructed
+        if (((!starbase) || (starbaseAlive == false)) && (hud.starbasePercent == 100)) {
             // Create a new starbase
             starbase = new objects.Starbase();
             game.addChild(starbase);
@@ -47,6 +47,31 @@ module states {
             starbase.integrityLabel.cache(0, 0, starbase.integrityLabel.getBounds().width, starbase.integrityLabel.getBounds().height);
             starbase.cache(0, 0, starbase.width, starbase.height);
             starbaseAlive = true;
+        }
+        else {
+            // repair shields if hull is already fully repaired
+            if (starbase.integrity == 100) {
+                starbase.shieldsDown();
+                starbase.shieldsUp();
+            }
+            // repair starbase hull between levels
+            if (starbase.integrity <= 100) {
+                starbase.integrity += 15;
+                if (starbase.integrity > 100) {
+                    starbase.integrity = 100;
+                }
+            }
+            // allow player to dock with starbase every even level
+            if (((gameLevel - lastDocked) >= 2) && (starbase.integrity > 60)) {
+                starbase.hasDocked = false;
+                starbase.gotoAndPlay("starbase");
+            }
+            if ((starbase.integrity > 35) && (starbase.integrity < 61)) {
+                starbase.gotoAndPlay("starbaseY");
+            }
+            if ((starbase.integrity > 1) && (starbase.integrity < 35)) {
+                starbase.gotoAndPlay("starbaseR");
+            }
         }
         // choose a tile for the starbase to occupy
         gameTile.getLocation(starbase);
@@ -72,10 +97,10 @@ module states {
 
     // generate enemies
     function createEnemies() {
-            // Instantiate Enemy Manager and Create enemies
-            klingon = new managers.Klingon();
-            klingon.spawn();
-            klingonsAlive = true;
+        // Instantiate Enemy Manager and Create enemies
+        klingon = new managers.Klingon();
+        klingon.spawn();
+        klingonsAlive = true;
     }
 
     // Show Level for 2 seconds
@@ -104,8 +129,8 @@ module states {
         setTimeout(function (e) {
             utility.Speech(firstdigit);
         }, 1000);
-        setTimeout(function (e) { 
-            createjs.Sound.play("point"); 
+        setTimeout(function (e) {
+            createjs.Sound.play("point");
         }, 1800);
         setTimeout(function (e) {
             utility.Speech(seconddigit);
@@ -126,7 +151,7 @@ module states {
         // place enemies in random tile location(s)
         createEnemies();
 
-        setTimeout(function (e) { 
+        setTimeout(function (e) {
             gameControls = true;
         }, 4000);
     }
@@ -175,7 +200,5 @@ module states {
         generateLevel();
         showLevelLabel();
         gamePlaying = true;
-
-        console.log(game);
     }
 } 
