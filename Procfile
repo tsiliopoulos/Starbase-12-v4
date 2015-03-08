@@ -1,1 +1,1 @@
-web: ./Starbase12-v4/index.html
+web: node index.js
