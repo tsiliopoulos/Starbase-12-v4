@@ -1,0 +1,19 @@
+{
+  "name": "starbase12",
+  "version": "0.4.0",
+  "description": "Starbase 12 HTML5 Game with CreateJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsiliopoulos/Starbase-12-v4.git"
+  },
+  "author": "Tom Tsiliopoulos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tsiliopoulos/Starbase-12-v4/issues"
+  },
+  "homepage": "https://github.com/tsiliopoulos/Starbase-12-v4"
+}
