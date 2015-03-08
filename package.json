@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/tsiliopoulos/Starbase-12-v4/issues"
   },
-  "homepage": "https://github.com/tsiliopoulos/Starbase-12-v4"
+  "homepage": "https://github.com/tsiliopoulos/Starbase-12-v4",
+  "dependencies": {
+    "express": "^4.12.2"
+  }
 }

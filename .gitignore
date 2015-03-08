@@ -4,6 +4,11 @@
 # Ignore Cloud9 Files
 .c9
 
+# Ignore node modules
+node_modules
+
+# Ignore MAC Directory Files
+.DS_Store
 
 # User-specific files
 *.suo
